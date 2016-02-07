@@ -1,7 +1,19 @@
 import FirebaseConfig from './FirebaseConfig';
-import Firebase from 'firebase';
+import firebase from 'firebase';
 
 
-const firebase = new Firebase(FirebaseConfig.url);
+class Firebase extends firebase {
 
-export default firebase;
+    constructor(url) {
+        super(url);
+    }
+
+    login(username) {
+        return this.child('users').push(username)
+    }
+
+}
+
+const firebaseInstance = new Firebase(FirebaseConfig.url);
+
+export default firebaseInstance;

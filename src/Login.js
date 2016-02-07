@@ -7,6 +7,9 @@ import FlatButton from 'material-ui/lib/flat-button';
 import RaisedButton from 'material-ui/lib/raised-button';
 import CardText from 'material-ui/lib/card/card-text';
 
+import store from './store';
+import { login } from './actions/LoginActions';
+import Firebase from './firebase/Firebase';
 
 const LoginStyle = {
   marginTop: '2em'
@@ -20,10 +23,15 @@ export default class Login extends Component {
     this.state = {username: ''};
   }
 
-  onFormSubmit(event) {
+  onSubmit(event) {
     event.preventDefault();
     let username = this.state.username;
-    this.props.onLogin(username);
+
+    Firebase.login(username).then((node) => {
+      // console.log(node);
+      store.dispatch(login(this.state.username));
+    });
+
   }
 
   onUsernameChange(e) {
@@ -34,7 +42,7 @@ export default class Login extends Component {
     return (
       <div style={LoginStyle} className="row center-xs">
         <div className="col-xs-6">
-          <form onSubmit={(e) => this.onFormSubmit(e)} >
+          <form onSubmit={(e) => this.onSubmit(e)} >
             <Card>
               <CardHeader
                 title="Please login to access the chat"
@@ -51,8 +59,10 @@ export default class Login extends Component {
                 />
                 <RaisedButton
                   label="Login"
-                  primary={true}
-                />
+                  onClick={(e) => this.onSubmit(e)}
+                  primary={true}>
+
+                </RaisedButton>
               </CardActions>
             </Card>
 
