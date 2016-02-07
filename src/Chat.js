@@ -10,6 +10,7 @@ import TextField from 'material-ui/lib/text-field';
 import RaisedButton from 'material-ui/lib/raised-button';
 
 import Login from './Login';
+import Firebase from './firebase/Firebase';
 
 
 export default class Chat extends Component {
@@ -19,9 +20,21 @@ export default class Chat extends Component {
     this.state = { loggedIn: false };
   }
 
-  onLogin(event) {
-    this.setState({ loggedIn: true });
-    console.log(event);
+  onLogin(username) {
+    this.setState({ })
+    Firebase.child('users')
+      .push(username)
+      .then((node) => {
+        this.setState({
+          loggedIn: true,
+          username: username
+        });
+      })
+  }
+
+  onLogOut() {
+    this.setState({ loggedIn: false });
+    // Firebase.child('users').child()
   }
 
   render() {
@@ -39,6 +52,7 @@ export default class Chat extends Component {
           <CardActions className="row">
             <TextField className="col-xs-8" hintText="Message..." />
             <RaisedButton label="Send" secondary={true} />
+            <RaisedButton onClick={this.onLogOut.bind(this)} label="Disconnect" secondary={true} />
           </CardActions>
         </Card>
       );
