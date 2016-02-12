@@ -6,20 +6,24 @@ import Login from './Login.js';
 import Users from './Users.js';
 import Header from './Header.js';
 import Chat from './Chat.js';
+import ChatList from './chatlist/ChatList';
 
 import * as LoginActions from './actions/LoginActions'
 
 class App extends Component {
-  render() {
 
-    let content = this.props.login.authenticated ?
-      <Chat /> :
-      <Login />;
+  render() {
+    console.log(this.props);
+
+    let content = this.props.login.authenticated
+      ? <Chat />
+      : <Login />;
 
     return (
 
       <div>
         <Header />
+        <ChatList />
         {content}
         <Users />
       </div>
