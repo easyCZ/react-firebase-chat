@@ -10,12 +10,10 @@ class ChatList extends Component {
         users: []
     }
 
-
-  }
-
-  componentWillMount() {
     Firebase.getUsers((snapshot) => {
-      this.setState({user: snapshot.val()})
+        let instance = snapshot.val();
+        let values = Object.keys(instance).map(key => instance[key]);
+      this.setState({users: values })
     })
   }
 
