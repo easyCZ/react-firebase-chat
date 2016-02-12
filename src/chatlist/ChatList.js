@@ -4,11 +4,20 @@ import Firebase from '../firebase/Firebase'
 class ChatList extends Component {
 
   constructor(props) {
-    super(props)
-    Firebase.getUsers().then(function(snapshot) {
-      console.log(snapshot.val()) }
-      )
+    super(props);
+
+    this.state = {
+        users: []
     }
+
+
+  }
+
+  componentWillMount() {
+    Firebase.getUsers(function(snapshot) {
+      console.log(snapshot.val())
+    })
+  }
 
   render() {
     return (
@@ -18,4 +27,4 @@ class ChatList extends Component {
 
 }
 
-export default connect()(ChatList)
+export default ChatList;
