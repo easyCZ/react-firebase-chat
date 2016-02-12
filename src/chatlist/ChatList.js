@@ -14,14 +14,15 @@ class ChatList extends Component {
   }
 
   componentWillMount() {
-    Firebase.getUsers(function(snapshot) {
-      console.log(snapshot.val())
+    Firebase.getUsers((snapshot) => {
+      this.setState({user: snapshot.val()})
     })
   }
 
   render() {
+    let users = this.state.users.map(arg => <div>{arg}</div>)
     return (
-      <div>test</div>
+      <div> {users} </div>
       );
   }
 
