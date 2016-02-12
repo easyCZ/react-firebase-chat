@@ -12,6 +12,10 @@ class Firebase extends firebase {
         return this.child('users').push(username)
     }
 
+    getUsers() {
+    	return this.chil('users').on('value')
+    }
+
 }
 
 const firebaseInstance = new Firebase(FirebaseConfig.url);
