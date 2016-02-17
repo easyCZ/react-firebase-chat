@@ -10,6 +10,11 @@ class ChatList extends Component {
         users: []
     }
 
+    Firebase.child('rooms/user1/roomC').set({
+        timestamp: 1,
+        last_message: 'Room C Last message'
+    });
+
     Firebase.getUsers((snapshot) => {
         let instance = snapshot.val();
         let values = Object.keys(instance).map(key => instance[key]);
@@ -18,7 +23,7 @@ class ChatList extends Component {
   }
 
   render() {
-    let users = this.state.users.map(arg => <div>{arg}</div>)
+    let users = this.state.users.map((arg, i) => <div key={i}>{arg}</div>)
     return (
       <div> {users} </div>
       );
