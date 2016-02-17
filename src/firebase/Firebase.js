@@ -12,8 +12,8 @@ class Firebase extends firebase {
         return this.child('users').push(username)
     }
 
-    getUsers(fn) {
-    	return this.child('users').on('value', fn)
+    getRooms(fn) {
+    	return this.child('rooms').child('user1').on('value', fn)
     }
 
 }

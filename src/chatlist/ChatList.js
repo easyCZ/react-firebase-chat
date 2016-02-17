@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Firebase from '../firebase/Firebase'
+import ChatListEntry from './ChatListEntry'
 
 class ChatList extends Component {
 
@@ -7,25 +8,21 @@ class ChatList extends Component {
     super(props);
 
     this.state = {
-        users: []
+        rooms: []
     }
 
-    Firebase.child('rooms/user1/roomC').set({
-        timestamp: 1,
-        last_message: 'Room C Last message'
-    });
-
-    Firebase.getUsers((snapshot) => {
+    Firebase.getRooms((snapshot) => {
         let instance = snapshot.val();
         let values = Object.keys(instance).map(key => instance[key]);
-      this.setState({users: values })
+      this.setState({rooms: values })
     })
   }
 
   render() {
-    let users = this.state.users.map((arg, i) => <div key={i}>{arg}</div>)
+    let rooms = this.state.rooms.map(
+      arg => <ChatListEntry lastMessage={arg.last_message}/>)
     return (
-      <div> {users} </div>
+      <div> {rooms} </div>
       );
   }
 
